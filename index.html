@@ -35,7 +35,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 repo">
+		<div class="col-xs-12 col-sm-6">
 			<h3>
 				<%= name %>
 				<span class="badge">
@@ -46,36 +46,64 @@
 			<p><%= description %></p>
 			<small>
 				<a target="_blank" href="<%= html_url %>">Ver no GitHub</a>
+				<% if(homepage) { %>
+					&nbsp;|&nbsp;
+					<a target="_blank" href="<%= homepage %>">Página do Projeto</a>
+				<% } %>
 			</small>
 		</div>
 	</script>
 
 	<script type="text/javascript">
 
-	function cb(github) {
+	var repos = [];
+
+	function renderRepos() {
 		var repoTemplate = _.template($('#repo').html());
 
 		$('#carregando').hide();
 
-		github.data.filter(function(repo) {
+		repos.filter(function(repo) {
 			return repo.stargazers_count > 0;
 		}).sort(function(a, b) {
-			return a.stargazers_count < b.stargazers_count;
+			return (a.stargazers_count - b.stargazers_count) * -1;
 		}).forEach(function(repo) {
 			$('#repos').append(repoTemplate(repo));
 		});
 	}
 
-	$(function() {
+	function cb(github) {
+		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
+			if(link[1] && link[1].rel === 'next') {
+				next = link[0];
+			}
+
+			return next;
+		}, null);
+
+		repos = repos.concat(github.data);
+
+		if(next) {
+			return loadRepos(next);
+		} else {
+			renderRepos();
+		}
+	}
+
+	function loadRepos(next) {
 		var API_URL = 'http://api.github.com',
 			REPOS_URL = API_URL + '/users/gammasoft/repos';
 
 		var get = $.ajax({
 			type: 'GET',
-			url: REPOS_URL,
+			url: next || REPOS_URL,
 			jsonpCallback: 'cb',
 			dataType: 'jsonp'
 		});
+	}
+
+	$(function() {
+		loadRepos();
 	});
 	</script>
 </body>
