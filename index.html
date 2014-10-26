@@ -3,39 +3,78 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Gammasoft</title>
-
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
-				<h1>Gammasoft</h1>
+				<h1>
+					<img width="35px" height="35px" src="http://gravatar.com/avatar/db28f48b817e4bff9578280c4f442101?s=35" alt="Logotipo">
+					Gammasoft
+				</h1>
+				<p class="lead">Lista de Projetos Open Source (<a href="http://gammasoft.mit-license.org"r target="_blank">Licença MIT</a>)</p>
 				<hr>
 			</div>
 		</div>
-
-
+		<div id="repos" class="row">
+			<div class="col-xs-12" id="carregando">
+				<span>Carregando...</span>
+			</div>
+		</div>
+		<footer class="row">
+			<div class="col-xs-12">
+				<hr>
+				<span class="text-muted">Gammasoft Desenvolvimento de Software Ltda &#8212; CNPJ: 19.950.366/0001-50 &#8212; <a target="_blank" href="http://gammasoft.mit-license.org">Licença MIT</a></span>
+			</div>
+		</footer>
 	</div>
 
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/underscore.min.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+	<script id="repo" type="text/template">
+		<div class="col-xs-12 col-sm-6 repo">
+			<h3>
+				<%= name %>
+				<span class="badge">
+					<%= stargazers_count %>&nbsp;
+					<span class="glyphicon glyphicon-star"></span>
+				</span>
+			</h3>
+			<p><%= description %></p>
+			<small>
+				<a target="_blank" href="<%= html_url %>">Ver no GitHub</a>
+			</small>
+		</div>
+	</script>
+
 	<script type="text/javascript">
+
+	function cb(github) {
+		var repoTemplate = _.template($('#repo').html());
+
+		$('#carregando').hide();
+
+		github.data.filter(function(repo) {
+			return repo.stargazers_count > 0;
+		}).sort(function(a, b) {
+			return a.stargazers_count < b.stargazers_count;
+		}).forEach(function(repo) {
+			$('#repos').append(repoTemplate(repo));
+		});
+	}
+
 	$(function() {
 		var API_URL = 'http://api.github.com',
 			REPOS_URL = API_URL + '/users/gammasoft/repos';
 
 		var get = $.ajax({
 			type: 'GET',
-			url: REPOS_URL
-		});
-
-		get.success(function(data) {
-			data.forEach(function(repositorio) {
-				document.write('<h4>' + repositorio.name + '</h4>')
-				document.write('<p class="lead">' + repositorio.description + '</p><br />')
-
-			})
+			url: REPOS_URL,
+			jsonpCallback: 'cb',
+			dataType: 'jsonp'
 		});
 	});
 	</script>
