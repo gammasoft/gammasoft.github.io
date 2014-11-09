@@ -97,6 +97,7 @@
 		var get = $.ajax({
 			type: 'GET',
 			url: next || REPOS_URL,
+			crossDomain: true,
 			jsonpCallback: 'cb',
 			dataType: 'jsonp'
 		});
