@@ -73,7 +73,6 @@
 	}
 
 	function cb(github) {
-		console.log(github);
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
 			if(link[1] && link[1].rel === 'next') {
 				next = link[0];
