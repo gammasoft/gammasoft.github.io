@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Gammasoft</title>
+	<title></title>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
 </head>
 <body>
@@ -10,10 +10,10 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h1>
-					<img width="35px" height="35px" src="http://gravatar.com/avatar/db28f48b817e4bff9578280c4f442101?s=35" alt="Logotipo">
-					Gammasoft
+					<img class="avatar" width="35px" height="35px" src="" alt="Logotipo">
+					<span class="nome"></span>
 				</h1>
-				<p class="lead">Lista de Projetos Open Source (<a href="http://gammasoft.mit-license.org"r target="_blank">Licença MIT</a>)</p>
+				<p class="lead">Lista de Projetos Open Source</p>
 				<hr>
 			</div>
 		</div>
@@ -109,7 +109,9 @@
 	}
 
 	function cbUser(usuario) {
-		console.log(usuario);
+		usuario = usuario.data;
+		$('img.avatar').attr('src', usuario.avatar_url + '&s=35');
+		$('span.nome').html(usuario.name);
 	}
 
 	function loadUser() {
