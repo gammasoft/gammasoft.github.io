@@ -56,8 +56,11 @@
 
 	<script type="text/javascript">
 
-	var repos = [],
+	var user = window.location.search.match(/user=([^&]+)/g),
+	    repos = [],
 	    stars = 0;
+
+	user = (user && user[0].split('=')[1]) || 'gammasoft';
 
 	function renderRepos() {
 		var repoTemplate = _.template($('#repo').html());
@@ -72,8 +75,6 @@
 			stars += repo.stargazers_count;
 			$('#repos').append(repoTemplate(repo));
 		});
-		
-		console.log(stars);
 	}
 
 	function cb(github) {
@@ -95,13 +96,10 @@
 	}
 
 	function loadRepos(next) {
-		var user = window.location.search.match(/user=([^&]+)/g);
-		user = (user && user[0].split('=')[1]) || 'gammasoft';
-		
 		var API_URL = 'http://api.github.com',
-			REPOS_URL = API_URL + '/users/' + user + '/repos';
+	        REPOS_URL = API_URL + '/users/' + user + '/repos';
 
-		var get = $.ajax({
+		$.ajax({
 			type: 'GET',
 			url: next || REPOS_URL,
 			crossDomain: true,
@@ -110,7 +108,22 @@
 		});
 	}
 
+	function cbUser(usuario) {
+		console.log(usuario);
+	}
+
+	function loadUser() {
+		$.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/users/' + user,
+			crossDomain: true,
+			jsonpCallback: 'cbUser',
+			dataType: 'jsonp'
+		});	
+	}
+
 	$(function() {
+		loadUser();
 		loadRepos();
 	});
 	</script>
