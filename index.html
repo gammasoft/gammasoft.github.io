@@ -112,6 +112,7 @@
 		usuario = usuario.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=35');
 		$('span.nome').html(usuario.name);
+		$('head title').html(usuario.name + ' - Lista de Projetos Open Source');
 	}
 
 	function loadUser() {
