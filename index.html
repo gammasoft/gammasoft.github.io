@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
 	<div class="container">
@@ -22,10 +23,10 @@
 				<span>Loading...</span>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row unstarredActions">
 			<div class="col-xs-12">
-				<small><a href="#">
-					<span id="action">Show</span> unstarred projects...
+				<small><a id="toggleUnstarred" href="#">
+					<span id="action">Show</span> <span id="unstarredCount"></span> unstarred projects...
 				</a></small>
 			</div>
 		</div>
@@ -42,7 +43,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 col-lg-3 <%= stargazers_count === 0 ? 'hide-zero-stars' : '' %>">
+		<div class="col-xs-12 col-sm-6 col-lg-3 <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
