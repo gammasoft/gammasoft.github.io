@@ -104,6 +104,7 @@
 				var resetDate = new Date(github.meta['X-RateLimit-Reset'] * 1000);
 				$('#repos #loading > h4').html('GitHub API limit reached... Come back after ' + resetDate);
 			}
+			
 			return $('#loading').hide();
 		}
 		
