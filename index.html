@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row displayNone">
+		<div id="userData" class="row displayNone">
 			<div class="col-xs-12">
 				<h1>
 					<img class="avatar img-rounded" width="75px" height="75px" src="" alt="Logotipo">
@@ -89,7 +89,7 @@
 	function cbRepos(github) {
 		if(github.meta.status !== 200) {
 			console.log(github);
-			$('#carregando').hide();
+			return $('#carregando').hide();
 		}
 		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
@@ -123,13 +123,16 @@
 	}
 
 	function cbUser(github) {
-		console.log(github);
+		if(github.meta.status !== 200) {
+			return console.log(github);
+		}
 		
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=75');
 		$('span.nome').html(usuario.name);
 		$('p.description').html(usuario.bio || 'Open Source Projects');
 		$('head title').html(usuario.name + ' - Open Source Projects');
+		$('#userData').show();
 	}
 
 	function loadUser() {
