@@ -44,7 +44,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 col-lg-4 <%= stargazers_count ? '' : 'displayNone' %>">
+		<div class="col-xs-12 <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
@@ -158,6 +158,19 @@
 			dataType: 'jsonp'
 		});	
 	}
+
+	$('a#toggleUnstarred').bind('click', function() {
+		var $actionSpan = $('.unstarredAction span#action'),
+		    show = $actionSpan.html() === 'Show';
+		
+		if(show) {
+			$actionSpan.html('Hide');
+		} else {
+			$actionSpan.html('Show');
+		}
+		
+		$('.unstarred').toggle(show);
+	});
 
 	$(function() {
 		loadUser();
