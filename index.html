@@ -24,7 +24,7 @@
 				<h4></h4>
 			</div>
 		</div>
-		<div class="row displayNone">
+		<div class="row unstarredActions displayNone">
 			<div class="col-xs-12">
 				<small><a id="toggleUnstarred" href="#">
 					<span id="action">Show</span> <span id="unstarredCount"></span> unstarred projects...
@@ -44,7 +44,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 col-lg-4 <%= stargazers_count ? '' : 'unstarred' %>">
+		<div class="col-xs-12 col-sm-6 col-lg-4 <%= stargazers_count ? '' : 'displayNone' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
@@ -66,7 +66,7 @@
 		</div>
 	</script>
 
-	<script type="text/javascript">
+	<script type="application/javascript">
 
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    repos = [],
@@ -75,16 +75,26 @@
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
 
 	function renderRepos() {
-		var repoTemplate = _.template($('#repo').html());
+		var repoTemplate = _.template($('#repo').html()),
+		    unsstarredRepos = 0;
 
 		$('#loading').hide();
 
-		repos.sort(function(a, b) {
+		repos.filter(function(repo) {
+			if(repo.stargazers_count === 0) {
+				unstarredRepos++;
+			}
+			return true;	
+		}).sort(function(a, b) {
 			return (a.stargazers_count - b.stargazers_count) * -1;
 		}).forEach(function(repo) {
 			stars += repo.stargazers_count;
 			$('#repos').append(repoTemplate(repo));
 		});
+		
+		if(unstarredRepos) {
+			$('.unstarredActions').show();
+		}
 	}
 
 	function cbRepos(github) {
