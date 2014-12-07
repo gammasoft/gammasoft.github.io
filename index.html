@@ -10,10 +10,10 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h1>
-					<img class="avatar" width="35px" height="35px" src="" alt="Logotipo">
+					<img class="avatar img-thumbnail" width="50px" height="50px" src="" alt="Logotipo">
 					<span class="nome"></span>
 				</h1>
-				<p class="lead">Lista de Projetos Open Source</p>
+				<p class="lead description"></p>
 				<hr>
 			</div>
 		</div>
@@ -112,7 +112,8 @@
 		usuario = usuario.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=35');
 		$('span.nome').html(usuario.name);
-		$('head title').html(usuario.name + ' - Lista de Projetos Open Source');
+		$('span.description').html(usuario.name);
+		$('head title').html(usuario.name + ' - Open Source Projects');
 	}
 
 	function loadUser() {
