@@ -78,9 +78,7 @@
 
 		$('#carregando').hide();
 
-		repos.filter(function(repo) {
-			return repo.stargazers_count > -1;
-		}).sort(function(a, b) {
+		repos.sort(function(a, b) {
 			return (a.stargazers_count - b.stargazers_count) * -1;
 		}).forEach(function(repo) {
 			stars += repo.stargazers_count;
@@ -89,6 +87,8 @@
 	}
 
 	function cbRepos(github) {
+		console.log(github);
+		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
 			if(link[1] && link[1].rel === 'next') {
 				next = link[0];
