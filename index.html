@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div id="repos" class="row">
-			<div class="col-xs-12" id="carregando">
+			<div class="col-xs-12" id="loading">
 				<span>Loading...</span>
 			</div>
 		</div>
@@ -43,7 +43,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 col-lg-3 <%= stargazers_count ? '' : 'unstarred' %>">
+		<div class="col-xs-12 col-sm-6 col-lg-4 <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
@@ -76,7 +76,7 @@
 	function renderRepos() {
 		var repoTemplate = _.template($('#repo').html());
 
-		$('#carregando').hide();
+		$('#loading').hide();
 
 		repos.sort(function(a, b) {
 			return (a.stargazers_count - b.stargazers_count) * -1;
@@ -89,7 +89,7 @@
 	function cbRepos(github) {
 		if(github.meta.status !== 200) {
 			console.log(github);
-			return $('#carregando').hide();
+			return $('#loading').hide();
 		}
 		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
