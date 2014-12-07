@@ -159,7 +159,9 @@
 		});	
 	}
 
-	$('a#toggleUnstarred').bind('click', function() {
+	$('a#toggleUnstarred').bind('click', function(e) {
+		e.preventDefault();
+		
 		var $actionSpan = $('.unstarredAction span#action'),
 		    show = $actionSpan.html() === 'Show';
 		
