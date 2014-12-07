@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
+		<div class="row displayNone">
 			<div class="col-xs-12">
 				<h1>
 					<img class="avatar img-rounded" width="75px" height="75px" src="" alt="Logotipo">
@@ -23,7 +23,7 @@
 				<span>Loading...</span>
 			</div>
 		</div>
-		<div class="row unstarredActions">
+		<div class="row displayNone">
 			<div class="col-xs-12">
 				<small><a id="toggleUnstarred" href="#">
 					<span id="action">Show</span> <span id="unstarredCount"></span> unstarred projects...
@@ -87,7 +87,10 @@
 	}
 
 	function cbRepos(github) {
-		console.log(github);
+		if(github.meta.status !== 200) {
+			console.log(github);
+			$('#carregando').hide();
+		}
 		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
 			if(link[1] && link[1].rel === 'next') {
