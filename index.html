@@ -21,7 +21,7 @@
 		</div>
 		<div id="repos" class="row">
 			<div class="col-xs-12" id="loading">
-				<h3>Loading...</h3>
+				<h4></h4>
 			</div>
 		</div>
 		<div class="row displayNone">
@@ -137,7 +137,7 @@
 	}
 
 	function loadUser() {
-		$('#repos #loading > h3').html('Loading @' + user + ' repositories from GitHub...' );
+		$('#repos #loading > h4').html('Loading @' + user + ' repositories from GitHub...' );
 		
 		$.ajax({
 			type: 'GET',
