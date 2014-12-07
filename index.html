@@ -21,7 +21,7 @@
 		</div>
 		<div id="repos" class="row">
 			<div class="col-xs-12" id="loading">
-				<span>Loading...</span>
+				<h3>Loading...</h3>
 			</div>
 		</div>
 		<div class="row displayNone">
@@ -60,7 +60,7 @@
 				<a target="_blank" href="<%= html_url %>">View on GitHub</a>
 				<% if(homepage) { %>
 					&nbsp;|&nbsp;
-					<a target="_blank" href="<%= homepage %>">View Project's Web Site</a>
+					<a target="_blank" href="<%= homepage %>">View Web Site</a>
 				<% } %>
 			</small>
 		</div>
@@ -137,6 +137,8 @@
 	}
 
 	function loadUser() {
+		$('#repos #loading > h3').html('Loading @' + user + ' repositories from GitHub...' );
+		
 		$.ajax({
 			type: 'GET',
 			url: 'https://api.github.com/users/' + user,
