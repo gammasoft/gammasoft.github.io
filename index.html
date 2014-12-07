@@ -119,8 +119,10 @@
 		});
 	}
 
-	function cbUser(usuario) {
-		usuario = usuario.data;
+	function cbUser(github) {
+		console.log(github);
+		
+		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=75');
 		$('span.nome').html(usuario.name);
 		$('p.description').html(usuario.bio || 'Open Source Projects');
