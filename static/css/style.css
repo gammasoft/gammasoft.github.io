@@ -2,6 +2,6 @@
   display: none;
 }
 
-.unstarredActions {
+#loading, .unstarredActions {
   margin-top: 20px;
 }
