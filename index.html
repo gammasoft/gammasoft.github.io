@@ -76,7 +76,7 @@
 
 	function renderRepos() {
 		var repoTemplate = _.template($('#repo').html()),
-		    unsstarredRepos = 0;
+		    unstarredRepos = 0;
 
 		$('#loading').hide();
 
@@ -93,6 +93,7 @@
 		});
 		
 		if(unstarredRepos) {
+			$('.unstarredActions #unstarredCount').html(unstarredRepos);
 			$('.unstarredActions').show();
 		}
 	}
