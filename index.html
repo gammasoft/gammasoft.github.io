@@ -100,7 +100,10 @@
 
 	function cbRepos(github) {
 		if(github.meta.status !== 200) {
-			console.log(github);
+			if(github.meta['X-RateLimit-Remaining'] === 0) {
+				var resetDate = new Date(github.meta['X-RateLimit-Reset'] * 1000);
+				$('#repos #loading > h4').html('GitHub API limit reached... Come back after ' + resetDate);
+			}
 			return $('#loading').hide();
 		}
 		
@@ -136,7 +139,7 @@
 
 	function cbUser(github) {
 		if(github.meta.status !== 200) {
-			return console.log(github);
+			return;
 		}
 		
 		var usuario = github.data;
@@ -148,7 +151,7 @@
 	}
 
 	function loadUser() {
-		$('#repos #loading > h4').html('Loading @' + user + ' repositories from GitHub...' );
+		$('#repos #loading > h4').html('Loading @' + user + ' repositories from GitHub...');
 		
 		$.ajax({
 			type: 'GET',
