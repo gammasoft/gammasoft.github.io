@@ -8,4 +8,11 @@
 
 #userData {
   margin-top: 20px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.repo {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
