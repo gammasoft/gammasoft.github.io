@@ -10,14 +10,6 @@
 <body>
 	<div class="container">
 		<div id="userData" class="row displayNone">
-			<!-- <div class="col-xs-12">
-				<h1>
-					<img class="avatar img-rounded" width="75px" height="75px" src="" alt="Logotipo">
-					<span class="nome"></span>
-				</h1>
-				<p class="lead description"></p>
-				<hr>
-			</div> -->
 			<div class="col-xs-12">
 				<div class="media">
 					<a class="media-left" href="#">
@@ -25,7 +17,7 @@
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading nome"></h4>
-						<p class="lead description"></p>
+						<p class="description"></p>
 					</div>
 				</div>
 			</div>
@@ -55,7 +47,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-12 col-sm-6 <%= stargazers_count ? '' : 'unstarred' %>">
+		<div class="col-xs-12 <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
