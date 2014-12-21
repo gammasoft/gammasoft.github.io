@@ -18,10 +18,10 @@
 				<p class="lead description"></p>
 				<hr>
 			</div> -->
-			<div>
+			<div class="col-xs-12">
 				<div class="media">
 					<a class="media-left" href="#">
-						<img class="avatar img-rounded" width="75px" height="75px" src="" alt="Logotipo">
+						<img class="avatar img-rounded" width="75px" height="75px" alt="Logotipo">
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading description">Media heading</h4>
@@ -163,7 +163,7 @@
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=75');
 		$('span.nome').html(usuario.name || usuario.login);
-		$('p.description').html(usuario.bio || 'Open Source Projects (' + usuario.public_repos + ')');
+		$('.description').html(usuario.bio || 'Open Source Projects (' + usuario.public_repos + ')');
 		$('head title').html((usuario.name || usuario.login) + ' - Open Source Projects (' + usuario.public_repos + ')');
 		$('#userData').show();
 	}
