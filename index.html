@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<div id="userData" class="row displayNone">
-			<div class="col-xs-offset-4 col-xs-4">
+			<div class="col-xs-offset-3 col-xs-6">
 				<div class="media">
 					<a class="media-left" href="#">
 						<img class="avatar img-rounded" width="64px" height="64px" alt="Logotipo">
@@ -23,12 +23,12 @@
 			</div>
 		</div>
 		<div id="repos" class="row">
-			<div class="col-xs-offset-4 col-xs-4" id="loading">
+			<div class="col-xs-offset-3 col-xs-6" id="loading">
 				<h4></h4>
 			</div>
 		</div>
 		<div class="row unstarredActions displayNone">
-			<div class="col-xs-offset-4 col-xs-4">
+			<div class="col-xs-offset-3 col-xs-6">
 				<small><a id="toggleUnstarred" href="#">
 					<span id="action">Show</span> <span id="unstarredCount"></span> unstarred repositories...
 				</a></small>
@@ -41,7 +41,7 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 	<script id="repo" type="text/template">
-		<div class="col-xs-offset-4 col-xs-4 <%= stargazers_count ? '' : 'unstarred' %>">
+		<div class="col-xs-offset-3 col-xs-6 <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
 				<%= name %>
 				<span class="badge">
