@@ -9,11 +9,11 @@
 </head>
 <body>
 	<div class="container">
-		<div id="userData" class="row displayNone" style="margin-top: 25px;">
+		<div id="userData" class="row displayNone" style="margin-top: 20px;">
 			<div class="col-xs-12">
 				<div class="media">
 					<a class="media-left" href="#">
-						<img class="avatar img-rounded" width="75px" height="75px" alt="Logotipo">
+						<img class="avatar img-rounded" width="64px" height="64px" alt="Logotipo">
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading nome"></h4>
@@ -34,12 +34,12 @@
 				</a></small>
 			</div>
 		</div>
-		<footer class="row">
+		<!-- <footer class="row">
 			<div class="col-xs-12">
 				<hr>
 				<p class="text-center text-muted">Gammasoft Desenvolvimento de Software Ltda &#8212; CNPJ: 19.950.366/0001-50</p>
 			</div>
-		</footer>
+		</footer> -->
 	</div>
 
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
@@ -154,7 +154,7 @@
 		}
 		
 		var usuario = github.data;
-		$('img.avatar').attr('src', usuario.avatar_url + '&s=75');
+		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || usuario.public_repos + ' Open Source Projects');
 		$('head title').html((usuario.name || usuario.login) + ' - Open Source Projects (' + usuario.public_repos + ')');
