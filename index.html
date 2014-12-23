@@ -16,7 +16,8 @@
 						<img class="avatar img-rounded" width="64px" height="64px" alt="Logotipo">
 					</a>
 					<div class="media-body">
-						<h1 class="media-heading nome"></h1>
+						<h1 class="media-heading nome" style="margin-bottom: 0px;"></h1>
+						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
 					</div>
 				</div>
@@ -74,7 +75,10 @@
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
-	    stars = 0;
+	    stars = 0,
+	    forks = 0,
+	    issues = 0,
+	    awesomeness = 0;
 
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
 	access_token = (access_token && access_token[0].split('=')[1]) || null;
@@ -94,8 +98,14 @@
 			return (a.stargazers_count - b.stargazers_count) * -1;
 		}).forEach(function(repo) {
 			stars += repo.stargazers_count;
+			forks += repo.forks;
+			issues += repo.open_issues;
+			
 			$('#repos').append(repoTemplate(repo));
 		});
+		
+		awesonemeness = stars + (2 * forks) - (0.1 * issues);
+		$('#details').html(awesomness);
 		
 		$('.repo').not(':hidden').last().addClass('borderBottom');
 		
