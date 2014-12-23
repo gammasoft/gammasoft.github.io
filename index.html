@@ -279,7 +279,7 @@
 		}
 	}
 
-	var loadUserAttempts = 0;
+	var loadUserAttempts = 1;
 
 	function loadUser() {
 		$('#repos #loading > h4').html('Loading @' + user + ' repositories from GitHub...');
@@ -293,7 +293,8 @@
 		});
 		
 		get.fail(function() {
-			if(loadUserAttempts < 3) {
+			if(loadUserAttempts <= 3) {
+				console && console.warn && console.warn('loadUserAttemp: ', loadUserAttempts);
 				loadUserAttempts++;
 				loadUser();
 			}
