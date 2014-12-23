@@ -192,7 +192,7 @@
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || usuario.public_repos + ' Open Source Projects');
 		$('head title').html((usuario.name || usuario.login) + ' - GitHub Summary');
-		$('#userData media > a').attr('href', usuario.html_url);
+		$('#userData .media > a').attr('href', usuario.html_url);
 		$('#userData').show();
 		$('#loading').addClass('bordersExceptOnTop');
 		user = usuario;
