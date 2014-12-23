@@ -43,7 +43,8 @@
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/js/underscore.min.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript" src="/static/js/marked.min.js"></script>
+	
 	<script id="repo" type="text/template">
 		<div class="col-xs-offset-3 col-xs-6 repo <%= stargazers_count ? '' : 'unstarred' %>">
 			<h3>
@@ -60,6 +61,11 @@
 					<%= open_issues %>&nbsp;
 					<span class="glyphicon glyphicon-flag"></span>
 				</span>
+				<% if(fork) { %>
+				<span class="badge">
+					<span class="glyphicon glyphicon-cutlery"></span>
+				</span>
+				<% } %>
 			</h3>
 			<p><%= description %></p>
 			<small>
