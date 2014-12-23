@@ -223,7 +223,7 @@
 			    $a = $('<a />'),
 			    description = member.description ? ' - ' + member.description : '';
 			  
-			$a.attr('href', '/?user=' + member.login);
+			$a.attr('href', '/?user=' + member.login + (access_token ? '&access_token=' + access_token : ''));
 			$img.attr('src', member.avatar_url + '&s=30');
 			$img.attr('title', '@' + member.login + description);
 			$img.addClass('img-rounded');
