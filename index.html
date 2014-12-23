@@ -224,8 +224,11 @@
 			   
 			$a.attr('href', '/?user=' + member.login);
 			$img.attr('src', member.avatar_url + '&s=30');
+			$img.attr('tooltip', '@' + member.login);
 			$img.addClass('img-rounded');
+			$img.tooltip();
 			$a.append($img);
+			
 			$('#membersOrOrganizations').append($a);
 		});
 		
