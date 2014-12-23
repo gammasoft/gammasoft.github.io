@@ -224,7 +224,7 @@
 			   
 			$a.attr('href', '/?user=' + member.login);
 			$img.attr('src', member.avatar_url + '&s=30');
-			$img.attr('tooltip', '@' + member.login);
+			$img.attr('title', '@' + member.login);
 			$img.addClass('img-rounded');
 			$img.tooltip();
 			$a.append($img);
@@ -272,6 +272,8 @@
 		
 		if(user.type === 'Organization') {
 			loadOrganizationMembers('https://api.github.com/orgs/' + user.login + '/members');
+		} else {
+			loadOrganizationMembers('https://api.github.com/' + user.login + '/orgs');
 		}
 	}
 
