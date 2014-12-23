@@ -216,7 +216,7 @@
 		console.log(github);
 	}
 
-	loadOrganizationMembers(user) {
+	function loadOrganizationMembers(user) {
 		$.ajax({
 			type: 'GET',
 			url: 'https://api.github.com/orgs/' + user.login + '/members',
