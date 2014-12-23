@@ -303,6 +303,12 @@
 	}
 
 	$(function() {
+		marked.setOptions({
+			highlight: function(code) {
+				return hljs.highlightAuto(code).value;
+		  	}
+		});
+
 		$('#repos').on('click', '.viewReadme', function(e) {
 			e.preventDefault();
 			var $target = $(e.target),
