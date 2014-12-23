@@ -218,9 +218,10 @@
 		$('.borderBottom').removeClass('borderBottom');
 		var visibleRepos = $('.repo').not(':hidden').size();
 		if(visibleRepos) {
-			$('.repo').not(':hidden').last().addClass('borderBottom');	
+			$('.repo').not(':hidden').last().addClass('borderBottom');
+			$('#userData > div').css('padding-bottom', '');
 		} else {
-			$('#userData > div').addClass('borderBottom');
+			$('#userData > div').addClass('borderBottom').css('padding-bottom', '20px');
 		}		
 	}
 
