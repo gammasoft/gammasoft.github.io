@@ -2,6 +2,11 @@
   display: none;
 }
 
+.member, .organization {
+  width: 20px;
+  height: 20px;
+}
+
 #loading, .unstarredActions {
   padding-top: 20px;
 }
