@@ -191,7 +191,7 @@
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('.nome').html(usuario.name || usuario.login);
-		$('.description').html(usuario.bio || usuario.public_repos + ' Open Source Projects');
+		$('.description').html(usuario.bio || '');
 		$('head title').html((usuario.name || usuario.login) + ' - GitHub Summary');
 		$('#userData .media > a').attr('href', usuario.html_url);
 		$('#userData').show();
