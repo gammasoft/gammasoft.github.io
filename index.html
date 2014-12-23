@@ -48,8 +48,12 @@
 					<%= stargazers_count %>&nbsp;
 					<span class="glyphicon glyphicon-star"></span>
 				</span>
+				<span class="badge">
+					<%= watchers_count %>
+					<span class="glyphicon glyphicon-eye-open"></span>
+				</span>
 			</h3>
-			<p class="lead"><%= description %></p>
+			<p><%= description %></p>
 			<small>
 				<% if(language) { %>
 					<span style="color: <%= getLanguageColor(language) %>">
