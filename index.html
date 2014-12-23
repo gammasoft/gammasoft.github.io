@@ -259,6 +259,12 @@
 	});
 
 	$(function() {
+		$('#repos').on('click', '.viewReadme', function(e) {
+			e.preventDefault();
+			var $target = $(e.target);
+			alert($target.data('url'));
+		});
+		
 		loadUser();
 		loadRepos();
 	});
@@ -268,12 +274,6 @@
 		    //pegar cores atualizadas
 		}[language] || '';
 	}
-	
-	$('#repos').on('click', '.viewReame', function(e) {
-		e.preventDefault();
-		var $target = $(e.target);
-		alert($target.data('url'));
-	});
 	</script>
 </body>
 </html>
