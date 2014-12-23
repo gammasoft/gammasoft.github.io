@@ -39,6 +39,30 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="readmeModal" tabindex="-1" role="dialog" aria-labelledby="readmeModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal">
+	                    <span aria-hidden="true">&times;</span>
+	                    <span class="sr-only">Fechar</span>
+	                </button>
+	
+	                <h4 class="modal-title" id="readmeModalLabel">REAME.md</h4>
+	            </div>
+	
+	            <div class="modal-body">
+	                <h3 id="loadingReadme">Loading README.md</h3>
+	                <div id="readmeContent"></div>
+	            </div>
+	
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
 
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/js/underscore.min.js"></script>
@@ -263,6 +287,10 @@
 			e.preventDefault();
 			var $target = $(e.target);
 			alert($target.data('url'));
+			
+			var $modal = $('#readmeModal');
+			$modal.find('#loadingReadme').show();
+			$modal.find('#readmeContent').hide();
 		});
 		
 		loadUser();
