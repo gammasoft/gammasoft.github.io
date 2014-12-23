@@ -290,8 +290,12 @@
 			return alert('Something went wrong! :/');
 		}
 		
+		var content = github.data.content;
+		content = atob(content);
+		content = marked(content);
+		
 		$modal.find('#loadingReadme').hide();
-		$modal.find('#readmeContent').html(marked(github.data.content));
+		$modal.find('#readmeContent').html(content);
 		$modal.find('#readmeContent').show();
 	}
 
