@@ -180,11 +180,11 @@
 		} else {
 			$actionSpan.html('Show');
 		}
-
-		$('.borderBottom').removeClass('borderBottom');
-		$('.repo').not(':hidden').last().addClass('borderBottom');
 		
 		$('.unstarred').toggle(show);
+		
+		$('.borderBottom').removeClass('borderBottom');
+		$('.repo').not(':hidden').last().addClass('borderBottom');
 	});
 
 	$(function() {
