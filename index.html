@@ -16,7 +16,10 @@
 						<img class="avatar img-rounded" width="64px" height="64px" alt="Logotipo">
 					</a>
 					<div class="media-body">
-						<h1 class="media-heading nome" style="margin-bottom: 0px;"></h1>
+						<h1 class="media-heading" style="margin-bottom: 0px;">
+							<span class="nome"></span>&nbsp;
+							<small id="awesomeness"></small>
+						</h1>
 						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
 					</div>
@@ -123,7 +126,7 @@
 			details.push(user.followers + ' followers');
 		}
 		
-		details.push(awesomeness + ' awesomeness');
+		$("#awesomeness").html(awesomeness);
 		$('small#details').html(details.join(' - '));
 		
 		applyBottomBorder();
