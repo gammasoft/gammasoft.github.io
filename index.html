@@ -75,7 +75,7 @@
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
-	    followers = 0,
+	    user,
 	    stars = 0,
 	    forks = 0,
 	    issues = 0,
@@ -105,17 +105,21 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 		
-		awesomeness = stars + (1.5 * followers) + (2 * forks) - (0.1 * issues);
+		awesomeness = stars + (1.5 * usuario.followers) + (2 * forks) - (0.1 * issues);
 		awesomeness = parseInt(awesomeness, 10);
 		
 		var details = [
 			stars + ' stars',
 			forks + ' forks',
-			issues + ' open issues',
-			followers + ' followers',
-			awesomeness + ' awesomeness'
-		].join(' — ');
-		$('small#details').html(details);
+			issues + ' open issues'
+		];
+		
+		if(user.type === 'User') {
+			details.push(user.followers + ' followers');
+		}
+		
+		details.push(awesomeness + ' awesomeness');
+		$('small#details').html(details.join(' - '));
 		
 		$('.repo').not(':hidden').last().addClass('borderBottom');
 		
@@ -186,7 +190,7 @@
 		$('head title').html((usuario.name || usuario.login) + ' - Open Source Projects (' + usuario.public_repos + ')');
 		$('#userData').show();
 		$('#loading').addClass('bordersExceptOnTop');
-		followers = usuario.followers;
+		user = usuario;
 	}
 
 	function loadUser() {
