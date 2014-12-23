@@ -279,15 +279,24 @@
 		}
 	}
 
+	var loadUserAttempts = 0;
+
 	function loadUser() {
 		$('#repos #loading > h4').html('Loading @' + user + ' repositories from GitHub...');
 
-		$.ajax({
+		var get = $.ajax({
 			type: 'GET',
 			url: 'https://api.github.com/users/' + user,
 			crossDomain: true,
 			jsonpCallback: 'cbUser',
 			dataType: 'jsonp'
+		});
+		
+		get.fail(function() {
+			if(loadUserAttempts < 3) {
+				loadUserAttempts++;
+				loadUser();
+			}
 		});
 	}
 
