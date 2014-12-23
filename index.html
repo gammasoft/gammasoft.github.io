@@ -285,12 +285,11 @@
 	$(function() {
 		$('#repos').on('click', '.viewReadme', function(e) {
 			e.preventDefault();
-			var $target = $(e.target);
-			alert($target.data('url'));
-			
-			var $modal = $('#readmeModal');
+			var $target = $(e.target),
+			$modal = $('#readmeModal');
 			$modal.find('#loadingReadme').show();
 			$modal.find('#readmeContent').hide();
+			$modal.modal('show');
 		});
 		
 		loadUser();
