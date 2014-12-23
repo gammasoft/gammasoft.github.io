@@ -22,6 +22,10 @@
   border-right: 1px solid black;
 }
 
+.repo:hover {
+  background-color: ;#f7f7f7
+}
+
 .borderBottom {
   border-bottom: 1px solid black;
   padding-bottom: 20px;
