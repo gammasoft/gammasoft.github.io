@@ -52,7 +52,7 @@
 	            </div>
 	
 	            <div class="modal-body">
-	                <h3 id="loadingReadme">Loading README.md</h3>
+	                <p id="loadingReadme">Loading README.md contents...</p>
 	                <div id="readmeContent"></div>
 	            </div>
 	
@@ -282,6 +282,20 @@
 	    }
 	});
 
+	function cbReadme(github) {
+		console.log(github);
+	}
+
+	function loadReadme(url, cb) {
+		$.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/' + url,
+			crossDomain: true,
+			jsonpCallback: 'cbReadme',
+			dataType: 'jsonp'
+		});		
+	}
+
 	$(function() {
 		$('#repos').on('click', '.viewReadme', function(e) {
 			e.preventDefault();
@@ -290,6 +304,12 @@
 			$modal.find('#loadingReadme').show();
 			$modal.find('#readmeContent').hide();
 			$modal.modal('show');
+			
+			loadReadme($target.data('url'), function(contents) {
+				$modal.find('#loadingReadme').hide();
+				$modal.find('#readmeContent').html(contents);
+				$modal.find('#readmeContent').show();
+			});
 		});
 		
 		loadUser();
