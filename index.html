@@ -59,6 +59,7 @@
 	<script type="text/javascript" src="/static/js/underscore.min.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/js/marked.min.js"></script>
+	<script type="text/javascript" src="/static/js/base64.js"></script>
 	
 	<script id="repo" type="text/template">
 		<div class="col-xs-offset-3 col-xs-6 repo <%= stargazers_count ? '' : 'unstarred' %>">
@@ -277,12 +278,11 @@
 		$modal = $('#readmeModal');
 		
 		if(github.meta.status !== 200) {
-			$modal.modal('hide');
-			return alert('Something went wrong! :/');
+			return $modal.find('#readmeContent').html('Something went wrong! :/');
 		}
 		
 		var content = github.data.content;
-		content = atob(content);
+		content = Base64.decode(content);
 		content = marked(content);
 		
 		$modal.find('#loadingReadme').hide();
