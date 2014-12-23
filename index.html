@@ -196,9 +196,9 @@
 	$.ajaxSetup({
 	    beforeSend: function(xhr, settings) {
 	        if(access_token && settings.url.indexOf('api.github') > -1) {
-	        	console.log('access_token');
+	        	console.log(access_token);
 	            var credenciais = btoa(access_token + ':x-oauth-basic');
-	            xhr.setRequestHeader("Authorization", "Basic " + credenciais);
+	            xhr.setRequestHeader('Authorization', 'Basic ' + credenciais);
 	        }
 	    }
 	});
