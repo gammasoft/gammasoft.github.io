@@ -220,11 +220,12 @@
 		
 		github.data.forEach(function(member) {
 			var $img = $('<img class="member" />'),
-			    $a = $('<a />');
-			   
+			    $a = $('<a />'),
+			    description = member.description ? ' - ' + member.description : '';
+			  
 			$a.attr('href', '/?user=' + member.login);
 			$img.attr('src', member.avatar_url + '&s=30');
-			$img.attr('title', '@' + member.login);
+			$img.attr('title', '@' + member.login + description);
 			$img.addClass('img-rounded');
 			$img.tooltip();
 			$a.append($img);
