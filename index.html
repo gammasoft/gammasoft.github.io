@@ -104,8 +104,9 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 		
-		awesomeness = stars + (2 * forks) - (0.1 * issues);
-		$('small#details').html(awesomeness);
+		awesomeness = (stars + (2 * forks) - (0.1 * issues)).toFixed(2);
+		var details = stars + ' stars — ' + forks + ' forks — ' + issues + 'open issues — ' + awesomeness + ' awesomeness';
+		$('small#details').html(details);
 		
 		$('.repo').not(':hidden').last().addClass('borderBottom');
 		
