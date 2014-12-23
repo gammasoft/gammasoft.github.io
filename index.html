@@ -23,7 +23,7 @@
 						</h1>
 						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
-						<span id="membersOrOrganizatioins"></span>
+						<span id="membersOrOrganizations"></span>
 					</div>
 				</div>
 			</div>
@@ -219,10 +219,14 @@
 		}
 		
 		github.data.forEach(function(member) {
-			var $img = $('<img class="member"/>');
+			var $img = $('<img class="member"/>'),
+			    $a = $('a');
+			   
+			$a.attr('href', '/?user=' + member.login);
 			$img.attr('src', member.avatar_url + '&s=30');
 			$img.addClass('img-rounded');
-			$('#membersOrOrganizatioins').append($img);
+			$a.append($img);
+			$('#membersOrOrganizations').append($img);
 		});
 		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
