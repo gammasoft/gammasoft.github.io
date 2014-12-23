@@ -125,7 +125,7 @@
 		details.push(awesomeness + ' awesomeness');
 		$('small#details').html(details.join(' - '));
 		
-		$('.repo').not(':hidden').last().addClass('borderBottom');
+		applyBottomBorder();
 		
 		if(unstarredRepos) {
 			$('.unstarredActions #unstarredCount').html(unstarredRepos);
@@ -209,6 +209,16 @@
 		});	
 	}
 
+	function applyBottomBorder() {
+		$('.borderBottom').removeClass('borderBottom');
+		var visibleRepos = $('.repo').not(':hidden').size();
+		if(visibleRepos) {
+			$('.repo').not(':hidden').last().addClass('borderBottom');	
+		} else {
+			$('.userData').addClass('borderBottom');
+		}		
+	}
+
 	$('a#toggleUnstarred').bind('click', function(e) {
 		e.preventDefault();
 		
@@ -222,9 +232,7 @@
 		}
 		
 		$('.unstarred').toggle(show);
-		
-		$('.borderBottom').removeClass('borderBottom');
-		$('.repo').not(':hidden').last().addClass('borderBottom');
+		applyBottomBorder();
 	});
 
 	$.ajaxSetup({
