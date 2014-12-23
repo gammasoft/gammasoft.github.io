@@ -224,12 +224,24 @@
 			$img.addClass('img-rounded');
 			$('#membersOrOrganizatioins').append($img);
 		});
+		
+		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
+			if(link[1] && link[1].rel === 'next') {
+				next = link[0];
+			}
+
+			return next;
+		}, null);
+
+		if(next) {
+			return loadOrganizationMembers(next);
+		}
 	}
 
-	function loadOrganizationMembers(user) {
+	function loadOrganizationMembers(url) {
 		$.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/orgs/' + user.login + '/members',
+			url: url,
 			crossDomain: true,
 			jsonpCallback: 'cbMembers',
 			dataType: 'jsonp'
@@ -252,7 +264,7 @@
 		user = usuario;
 		
 		if(user.type === 'Organization') {
-			loadOrganizationMembers(usuario);
+			loadOrganizationMembers('https://api.github.com/orgs/' + user.login + '/members');
 		}
 	}
 
