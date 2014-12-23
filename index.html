@@ -226,7 +226,7 @@
 			$img.attr('src', member.avatar_url + '&s=30');
 			$img.addClass('img-rounded');
 			$a.append($img);
-			$('#membersOrOrganizations').append($img);
+			$('#membersOrOrganizations').append($a);
 		});
 		
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
