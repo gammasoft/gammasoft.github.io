@@ -344,9 +344,10 @@
 			var message = 'Something went wrong! :/';
 			
 			if(github.meta.status === 404) {
-				message = 'This repo has no README.md file! :(';
+				message = 'This repo has no README.md file, sorry! :(';
 			}
 			
+			console.log(message);
 			$modal.find('#loadingReadme').hide();
 			$modal.find('#readmeContent').html(message);
 			$modal.find('#readmeContent').show();
