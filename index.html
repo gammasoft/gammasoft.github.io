@@ -74,6 +74,8 @@
 						<%= language %>
 					</span>&nbsp;&#8212;&nbsp;	
 				<% } %>
+				<a target="_blank" href="#" data-url="/<%= full_name%/readme">View README.md</a>
+				&nbsp;|&nbsp;
 				<a target="_blank" href="<%= html_url %>">View on GitHub</a>
 				<% if(homepage) { %>
 					&nbsp;|&nbsp;
@@ -266,6 +268,12 @@
 		    //pegar cores atualizadas
 		}[language] || '';
 	}
+	
+	$('.repos').on('click', '.viewReame', function(e) {
+		e.preventDefault();
+		var $target = $(e.target);
+		alert($target.data('url'));
+	});
 	</script>
 </body>
 </html>
