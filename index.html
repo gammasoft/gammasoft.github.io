@@ -219,8 +219,8 @@
 		}
 		
 		github.data.forEach(function(member) {
-			var $img = $('<img class="member"/>'),
-			    $a = $('a');
+			var $img = $('<img class="member" />'),
+			    $a = $('<a />');
 			   
 			$a.attr('href', '/?user=' + member.login);
 			$img.attr('src', member.avatar_url + '&s=30');
