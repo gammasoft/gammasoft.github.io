@@ -212,6 +212,20 @@
 		});
 	}
 
+	function cbMembers(github) {
+		console.log(github);
+	}
+
+	loadOrganizationMembers(user) {
+		$.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/orgs/' + user.login + '/members',
+			crossDomain: true,
+			jsonpCallback: 'cbMembers',
+			dataType: 'jsonp'
+		});	
+	}
+
 	function cbUser(github) {
 		if(github.meta.status !== 200) {
 			return;
@@ -226,6 +240,10 @@
 		$('#userData').show();
 		$('#loading').addClass('bordersExceptOnTop');
 		user = usuario;
+		
+		if(user.type === 'Organization') {
+			loadOrganizationMembers(usuario);
+		}
 	}
 
 	function loadUser() {
