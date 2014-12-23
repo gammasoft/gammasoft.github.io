@@ -75,6 +75,7 @@
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
+	    followers = 0,
 	    stars = 0,
 	    forks = 0,
 	    issues = 0,
@@ -104,7 +105,10 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 		
-		awesomeness = parseInt(stars + (2 * forks) - (0.1 * issues), 10);
+		awesomeness = stars + (1.5 * followers) + (2 * forks) - (0.1 * issues);
+		awesomeness = awesomeness / (repos.length || 1);
+		awesomeness = parseInt(awesomeness, 10);
+		
 		var details = stars + ' stars — ' + forks + ' forks — ' + issues + ' open issues — ' + awesomeness + ' awesomeness';
 		$('small#details').html(details);
 		
@@ -177,6 +181,7 @@
 		$('head title').html((usuario.name || usuario.login) + ' - Open Source Projects (' + usuario.public_repos + ')');
 		$('#userData').show();
 		$('#loading').addClass('bordersExceptOnTop');
+		followers = usuario.followers;
 	}
 
 	function loadUser() {
