@@ -344,6 +344,8 @@
 			return $modal.find('#readmeContent').html('Something went wrong! :/');
 		}
 
+		console.log(github);
+
 		var content = github.data.content;
 		content = Base64.decode(content);
 		content = marked(content);
