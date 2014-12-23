@@ -298,7 +298,7 @@
 	function loadReadme(url, cb) {
 		$.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/' + url,
+			url: 'https://api.github.com/repos/' + url,
 			crossDomain: true,
 			jsonpCallback: 'cbReadme',
 			dataType: 'jsonp'
