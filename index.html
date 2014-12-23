@@ -110,7 +110,7 @@
 		});
 		
 		awesomeness = stars + (1.5 * user.followers) + (2 * forks) - (0.1 * issues);
-		awesomeness = parseInt(awesomeness, 10);
+		awesomeness = awesomeness.toFixed(0);
 		
 		var details = [
 			stars + ' stars',
