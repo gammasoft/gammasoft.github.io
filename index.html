@@ -173,7 +173,7 @@
 				$img.attr('height', '230px');
 				$('#repos #loading > h4').parent().css('border', '0').addClass('text-center').prepend($img);
 				$img.attr('src', 'http://random-octocat.herokuapp.com/');
-				
+
 				return;
 			} else {
 				$('#repos #loading > h4').html('Something went wrong!');
@@ -218,22 +218,22 @@
 		if(github.meta.status !== 200) {
 			return;
 		}
-		
+
 		github.data.forEach(function(member) {
 			var $img = $('<img class="member" />'),
 			    $a = $('<a />'),
 			    description = member.description ? ' - ' + member.description : '';
-			  
+
 			$a.attr('href', '/?user=' + member.login + (access_token ? '&access_token=' + access_token : ''));
 			$img.attr('src', member.avatar_url + '&s=30');
 			$img.attr('title', '@' + member.login + description);
 			$img.addClass('img-rounded');
 			$img.tooltip();
 			$a.append($img);
-			
+
 			$('#membersOrOrganizations').append($a);
 		});
-		
+
 		var next = github.meta.Link && github.meta.Link.reduce(function(next, link) {
 			if(link[1] && link[1].rel === 'next') {
 				next = link[0];
@@ -254,7 +254,7 @@
 			crossDomain: true,
 			jsonpCallback: 'cbMembers',
 			dataType: 'jsonp'
-		});	
+		});
 	}
 
 	function cbUser(github) {
@@ -271,7 +271,7 @@
 		$('#userData').show();
 		$('#loading').addClass('bordersExceptOnTop');
 		user = usuario;
-		
+
 		if(user.type === 'Organization') {
 			loadOrganizationMembers('https://api.github.com/orgs/' + user.login + '/members');
 		} else {
@@ -291,7 +291,7 @@
 			jsonpCallback: 'cbUser',
 			dataType: 'jsonp'
 		});
-		
+
 		get.fail(function() {
 			if(loadUserAttempts <= 3) {
 				console && console.warn && console.warn('loadUserAttempt: ', loadUserAttempts);
@@ -339,14 +339,14 @@
 
 	function cbReadme(github) {
 		$modal = $('#readmeModal');
-///teste
+
 		if(github.meta.status !== 200) {
 			var message = 'Something went wrong! :/';
-			
+
 			if(github.meta.status === 404) {
 				message = 'This repo has no README.md file, sorry! :(';
 			}
-			
+
 			$modal.find('#loadingReadme').hide();
 			$modal.find('#readmeContent').html(message);
 			$modal.find('#readmeContent').show();
