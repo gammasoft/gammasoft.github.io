@@ -273,7 +273,7 @@
 		if(user.type === 'Organization') {
 			loadOrganizationMembers('https://api.github.com/orgs/' + user.login + '/members');
 		} else {
-			loadOrganizationMembers('https://api.github.com/' + user.login + '/orgs');
+			loadOrganizationMembers('https://api.github.com/users/' + user.login + '/orgs');
 		}
 	}
 
