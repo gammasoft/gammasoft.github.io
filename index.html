@@ -23,6 +23,7 @@
 						</h1>
 						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
+						<span id="membersOrOrganizatioins"></span>
 					</div>
 				</div>
 			</div>
@@ -213,7 +214,16 @@
 	}
 
 	function cbMembers(github) {
-		console.log(github);
+		if(github.meta.status !== 200) {
+			return;
+		}
+		
+		github.data.forEach(function(member) {
+			var $img = $('<img class="member"/>');
+			$img.attr('src', member.avatar_url + '&s=20');
+			$img.addClass('img-rounded');
+			$('#membersOrOrganizatioins').append($img);
+		});
 	}
 
 	function loadOrganizationMembers(user) {
