@@ -91,6 +91,8 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 		
+		$('.repo').not(':hidden').last().addClass('borderBottom');
+		
 		if(unstarredRepos) {
 			$('.unstarredActions #unstarredCount').html(unstarredRepos);
 			$('.unstarredActions').show();
