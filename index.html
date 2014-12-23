@@ -291,7 +291,7 @@
 		}
 		
 		$modal.find('#loadingReadme').hide();
-		$modal.find('#readmeContent').html(github.data);
+		$modal.find('#readmeContent').html(marked(github.data.content));
 		$modal.find('#readmeContent').show();
 	}
 
