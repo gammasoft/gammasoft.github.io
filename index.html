@@ -19,7 +19,6 @@
 					<div class="media-body">
 						<h1 class="media-heading" style="margin-bottom: 0px;">
 							<span class="nome"></span>
-							<small id="awesomeness" style="display: none;"></small>
 						</h1>
 						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
@@ -108,6 +107,7 @@
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
+        allReposLoaded = false,
 	    user,
 	    stars = 0,
 	    forks = 0,
@@ -118,13 +118,16 @@
 	access_token = (access_token && access_token[0].split('=')[1]) || null;
 
     function calculateAwesomeness() {
-        if(!user) {
+        if(!user || !allReposLoaded) {
             return;
         }
 
         awesomeness = stars + (1.5 * user.followers) + (2 * forks) - (0.1 * issues);
         awesomeness = awesomeness.toFixed(0);
-        $("#awesomeness").html(awesomeness).show();
+        var $awesomeness = $('<small id="awesomeness" />');
+        $awesomeness.html(awesomeness);
+
+        $('.media-heading').append($awesomeness);
     }
 
 	function renderRepos() {
@@ -148,6 +151,7 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 
+        allReposLoaded = true;
         calculateAwesomeness();
 
         var details = [
