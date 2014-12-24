@@ -19,7 +19,7 @@
 					<div class="media-body">
 						<h1 class="media-heading" style="margin-bottom: 0px;">
 							<span class="nome"></span>
-							<small id="awesomeness"></small>
+							<small id="awesomeness" style="display: none;"></small>
 						</h1>
 						<small id="details" class="text-muted"></small>
 						<p class="description"></p>
@@ -55,7 +55,6 @@
 	        </div>
 	    </div>
 	</div>
-
 
 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/js/underscore.min.js"></script>
@@ -125,7 +124,7 @@
 
         awesomeness = stars + (1.5 * user.followers) + (2 * forks) - (0.1 * issues);
         awesomeness = awesomeness.toFixed(0);
-        $("#awesomeness").html(awesomeness);
+        $("#awesomeness").html(awesomeness).show();
     }
 
 	function renderRepos() {
