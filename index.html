@@ -178,7 +178,7 @@
 		}
 		
             $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
-            $('p.repoDescription').css('color', 'rgb(' + secondaryColor.join(',') + ')');
+            $('p.repoDescription, p.description').css('color', 'rgb(' + secondaryColor.join(',') + ')');
 	}
 
 	function cbRepos(github) {
@@ -289,7 +289,7 @@
 			secondaryColor = pallete[1];
 			    
 			$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
-			$('p.repoDescription').css('color', 'rgb(' + secondaryColor.join(',') + ')');
+			$('p.repoDescription, p.description').css('color', 'rgb(' + secondaryColor.join(',') + ')');
 		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
