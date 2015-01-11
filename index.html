@@ -277,6 +277,11 @@
 
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
+		$('img.avatar').load(function() {
+			var ct = new ColorThief();
+			console.log('aweba');
+			console.log(ct.getColor($('.avatar').get(0)));
+		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
 		$('head title').html((usuario.name || usuario.login) + ' - GitHub Summary');
