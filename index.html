@@ -278,9 +278,10 @@
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('img.avatar').load(function() {
-			var ct = new ColorThief();
-			console.log('aweba');
-			console.log(ct.getColor($('.avatar').get(0)));
+			var ct = new ColorThief(),
+			    domintarColorRgb = ct.getColor($('.avatar').get(0));
+			    
+			$('h1 > span, h3:first').css('color', 'rgb(' + dominatColor.join(',') + ')');
 		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
