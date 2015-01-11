@@ -85,7 +85,7 @@
 				</span>
 				<% } %>
 			</h3>
-			<p><%= description %></p>
+			<p class="repoDescription"><%= description %></p>
 			<small>
 				<% if(language) { %>
 					<span style="color: <%= getLanguageColor(language) %>">
@@ -114,6 +114,7 @@
 	    forks = 0,
 	    issues = 0,
 	    awesomeness = 0,
+	    secondaryColor = null,
 	    dominantColor = null;
 
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
@@ -177,6 +178,7 @@
 		}
 		
             $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
+            $('p.repoDescription').css('color', 'rgb(' + secondaryColor.join(',') + ')');
 	}
 
 	function cbRepos(github) {
@@ -280,10 +282,14 @@
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('img.avatar').load(function() {
-			var ct = new ColorThief();
-			dominantColor = ct.getColor($('.avatar').get(0));
+			var ct = new ColorThief(),
+			    pallete = ct.getPallete($('.avatar').get(0), 2);
+			
+			dominantColor = pallete[0];
+			secondaryColor = pallete[1];
 			    
 			$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
+			$('p.repoDescription').css('color', 'rgb(' + secondaryColor.join(',') + ')');
 		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
