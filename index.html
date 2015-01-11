@@ -283,7 +283,7 @@
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('img.avatar').load(function() {
 			var ct = new ColorThief(),
-			    pallete = ct.getPallete($('.avatar').get(0), 2);
+			    pallete = ct.getPalette($('.avatar').get(0), 2);
 			
 			dominantColor = pallete[0];
 			secondaryColor = pallete[1];
