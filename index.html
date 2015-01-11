@@ -108,12 +108,13 @@
 	var user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
-        allReposLoaded = false,
+	    allReposLoaded = false,
 	    user,
 	    stars = 0,
 	    forks = 0,
 	    issues = 0,
-	    awesomeness = 0;
+	    awesomeness = 0,
+	    dominantColor = null;
 
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
 	access_token = (access_token && access_token[0].split('=')[1]) || null;
@@ -152,21 +153,21 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 
-        allReposLoaded = true;
-        calculateAwesomeness();
+            allReposLoaded = true;
+            calculateAwesomeness();
 
-        var details = [
-            stars + ' stars',
-            forks + ' forks',
-            issues + ' open issues',
-            repos.length + ' repos'
-        ];
+            var details = [
+                stars + ' stars',
+                forks + ' forks',
+                issues + ' open issues',
+                repos.length + ' repos'
+            ];
 
-        if(user.type === 'User') {
-            details.push(user.followers + ' followers');
-        }
+            if(user.type === 'User') {
+                details.push(user.followers + ' followers');
+            }
 
-        $('small#details').html(details.join(' - '));
+            $('small#details').html(details.join(' - '));
 
 		applyBottomBorder();
 
@@ -174,6 +175,8 @@
 			$('.unstarredActions #unstarredCount').html(unstarredRepos);
 			$('.unstarredActions').show();
 		}
+		
+            $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
 	}
 
 	function cbRepos(github) {
@@ -277,10 +280,10 @@
 		var usuario = github.data;
 		$('img.avatar').attr('src', usuario.avatar_url + '&s=64');
 		$('img.avatar').load(function() {
-			var ct = new ColorThief(),
-			    dominantColorRgb = ct.getColor($('.avatar').get(0));
+			var ct = new ColorThief();
+			dominantColor = ct.getColor($('.avatar').get(0));
 			    
-			$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColorRgb.join(',') + ')');
+			$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
 		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
