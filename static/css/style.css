@@ -11,6 +11,9 @@
 
 #loading, .unstarredActions {
   padding-top: 20px;
+  -moz-border-radius: 0px 0px 0px 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .bordersExceptOnTop {
