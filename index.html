@@ -232,6 +232,10 @@
 		if(github.meta.status !== 200) {
 			if(github.meta['X-RateLimit-Remaining'] === '0') {
 				var resetDate = new Date(github.meta['X-RateLimit-Reset'] * 1000);
+                if(typeof github.meta['X-RateLimit-Reset'] === 'undefined' || !github.meta['X-RateLimit-Reset']) {
+                    resetDate = 'a while';
+                }
+
 				$('#repos #loading > h4').html('GitHub API limit reached... <br /><small class="text-muted">Come back after ' + resetDate + '</small>');
 				var $img = $('<img />');
 				$img.attr('height', '230px');
