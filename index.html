@@ -382,11 +382,20 @@
 	function applyBottomBorder() {
 		$('.borderBottom').removeClass('borderBottom');
 		var visibleRepos = $('.repo').not(':hidden').size();
+
 		if(visibleRepos) {
 			$('.repo').not(':hidden').last().addClass('borderBottom');
 			$('#userData > div').css('padding-bottom', '');
+
+            $('#userData > div').css('-moz-border-radius', '');
+            $('#userData > div').css('-webkit-border-radius', '');
+            $('#userData > div').css('border-radius', '');
 		} else {
 			$('#userData > div').addClass('borderBottom').css('padding-bottom', '20px');
+
+            $('#userData > div').css('-moz-border-radius', '10px 10px 10px 10px');
+            $('#userData > div').css('-webkit-border-radius', '10px 10px 10px 10px');
+            $('#userData > div').css('border-radius', '10px 10px 10px 10px');
 		}
 	}
 
