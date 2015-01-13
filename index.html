@@ -192,8 +192,9 @@
 			$('.unstarredActions').show();
 		}
 		
-            $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
-            //$('p.repoDescription, p.description').css('color', 'rgb(' + secondaryColor.join(',') + ')');
+	    if(dominatColor) {
+	    	$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');	
+	    }
 	}
 
 	function cbRepos(github) {
