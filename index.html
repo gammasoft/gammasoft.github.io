@@ -149,8 +149,10 @@
             return;
         }
 
-        awesomeness = stars + (1.5 * user.followers) + (2 * forks) - (0.1 * issues);
+        awesomeness = stars + (1.5 * (user.followers || 0)) + (2 * forks) - (0.1 * issues);
         awesomeness = awesomeness.toFixed(0);
+
+        $('small#awesomeness').remove();
         var $awesomeness = $('<small id="awesomeness" />');
         $awesomeness.html(awesomeness);
 
