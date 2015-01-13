@@ -118,22 +118,29 @@
 	    dominantColor = null;
 
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
+    user = user.replace('/', '');
+
 	access_token = (access_token && access_token[0].split('=')[1]) || null;
 
-        function lighten(l, r, g, b) {
-            var tmp_r = r,
-            	tmp_g = g,
-            	tmp_b = b;
+    function lighten(l, r, g, b) {
+        var tmpR = r,
+        	tmpG = g,
+        	tmpB = b;
 
-            tmp_r = (255 - r) * l + r;
-            tmp_g = (255 - g) * l + g;
-            tmp_b = (255 - b) * l + b;
+        tmpR = (255 - r) * l + r;
+        tmpG = (255 - g) * l + g;
+        tmpB = (255 - b) * l + b;
 
-            if (tmp_r > 255 || tmp_g > 255 || tmp_b > 255) 
-                return [r, g, b ];
-            else 
-                return [ parseInt(tmp_r), parseInt(tmp_g), parseInt(tmp_b) ];
+        if(tmpR > 255 || tmpG > 255 || tmpB > 255) {
+            return [r, g, b];
+        } else {
+            return [
+                parseInt(tmpR, 10),
+                parseInt(tmpG, 10),
+                parseInt(tmpB, 10)
+            ];
         }
+    }
 
     function calculateAwesomeness() {
         if(!user || !allReposLoaded) {
@@ -146,6 +153,15 @@
         $awesomeness.html(awesomeness);
 
         $('.media-heading').append($awesomeness);
+    }
+
+    function applyColors() {
+        if(dominantColor) {
+            $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
+
+            var lightColor = lighten(0.95, dominantColor[0], dominantColor[1], dominantColor[2]);
+            $('body').css('background-color', 'rgb(' + lightColor.join(',') + ')');
+        }
     }
 
 	function renderRepos() {
@@ -169,21 +185,21 @@
 			$('#repos').append(repoTemplate(repo));
 		});
 
-            allReposLoaded = true;
-            calculateAwesomeness();
+        allReposLoaded = true;
+        calculateAwesomeness();
 
-            var details = [
-                stars + ' stars',
-                forks + ' forks',
-                issues + ' open issues',
-                repos.length + ' repos'
-            ];
+        var details = [
+            stars + ' stars',
+            forks + ' forks',
+            issues + ' open issues',
+            repos.length + ' repos'
+        ];
 
-            if(user.type === 'User') {
-                details.push(user.followers + ' followers');
-            }
+        if(user.type === 'User') {
+            details.push(user.followers + ' followers');
+        }
 
-            $('small#details').html(details.join(' - '));
+        $('small#details').html(details.join(' - '));
 
 		applyBottomBorder();
 
@@ -191,10 +207,8 @@
 			$('.unstarredActions #unstarredCount').html(unstarredRepos);
 			$('.unstarredActions').show();
 		}
-		
-	    if(dominatColor) {
-	    	$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');	
-	    }
+
+        applyColors();
 	}
 
 	function cbRepos(github) {
@@ -300,12 +314,11 @@
 		$('img.avatar').load(function() {
 			var ct = new ColorThief(),
 			    pallete = ct.getPalette($('.avatar').get(0), 2);
-			
+
 			dominantColor = pallete[0];
 			secondaryColor = pallete[1];
-			    
-			$('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
-			//$('p.repoDescription, p.description').css('color', 'rgb(' + secondaryColor.join(',') + ')');
+
+			applyColors();
 		});
 		$('.nome').html(usuario.name || usuario.login);
 		$('.description').html(usuario.bio || '');
