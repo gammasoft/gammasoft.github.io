@@ -155,12 +155,27 @@
         $('.media-heading').append($awesomeness);
     }
 
+    function isTooLight(rgb) {
+        return (rgb[0] + rgb[1] + rgb[2]) > 700;
+    }
+
     function applyColors() {
         if(dominantColor) {
+            if(isTooLight(dominantColor)) {
+                dominantColor = [0, 0, 0];
+            }
+
             $('h1 > span, h3 .repoName').css('color', 'rgb(' + dominantColor.join(',') + ')');
 
-            var lightColor = lighten(0.95, dominantColor[0], dominantColor[1], dominantColor[2]);
+            var lightColor = lighten(0.95, dominantColor[0], dominantColor[1], dominantColor[2]),
+                hoverColor = lighten(0.85, dominantColor[0], dominantColor[1], dominantColor[2]);
+
             $('body').css('background-color', 'rgb(' + lightColor.join(',') + ')');
+            $(".repo").hover(function () {
+                $(this).css('background-color', 'rgb(' + hoverColor.join(',') + ')');
+            }, function () {
+                $(this).css('background-color', '');
+            });
         }
     }
 
