@@ -120,6 +120,21 @@
 	user = (user && user[0].split('=')[1]) || 'gammasoft';
 	access_token = (access_token && access_token[0].split('=')[1]) || null;
 
+        function lighten(l, r, g, b) {
+            var tmp_r = r,
+            	tmp_g = g,
+            	tmp_b = b;
+
+            tmp_r = (255 - r) * l + r;
+            tmp_g = (255 - g) * l + g;
+            tmp_b = (255 - b) * l + b;
+
+            if (tmp_r > 255 || tmp_g > 255 || tmp_b > 255) 
+                return [r, g, b ];
+            else 
+                return [ parseInt(tmp_r), parseInt(tmp_g), parseInt(tmp_b) ];
+        }
+
     function calculateAwesomeness() {
         if(!user || !allReposLoaded) {
             return;
