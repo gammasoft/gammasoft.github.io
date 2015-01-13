@@ -46,4 +46,7 @@
 
 .borderBottom {
   border-bottom: 1px solid black;
+  -moz-border-radius: 0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
 }
