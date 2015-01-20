@@ -246,8 +246,11 @@
 
 				return;
 			} else {
-				$('#repos #loading > h4').html('Something went wrong!');
-				console.log(github);
+                if(github.meta.status === 404) {
+                    return;
+                }
+
+                $('#repos #loading > h4').html('Something went wrong!');
 				return;
 			}
 
@@ -332,6 +335,11 @@
 
 	function cbUser(github) {
 		if(github.meta.status !== 200) {
+            if(github.meta.status === 404) {
+                $('#repos #loading > h4').html('@' + user + ' is not on GitHub yet!');
+                return;
+            }
+
 			return;
 		}
 
