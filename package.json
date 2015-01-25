@@ -2,7 +2,7 @@
   "name": "ghsummary",
   "version": "1.0.0",
   "description": "Proxy to obtain access tokens from users",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "exit 0;"
   },
