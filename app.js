@@ -10,18 +10,17 @@ http.createServer(function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    request({
+    request.post({
         uri: 'https://github.com/login/oauth/access_token',
-        method: 'POST',
         json: {
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
             code: query.code
         }
     }, function(err, response, body) {
-        if(err || body.error) {
+        if(err || (body && body.error)) {
             res.statusCode = 500;
-            return res.end(JSON.stringify(body));
+            return res.end(body ? JSON.stringify(body) : 'Error 500');
         }
 
         res.writeHead(302, {
