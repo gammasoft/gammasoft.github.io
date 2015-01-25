@@ -24,10 +24,10 @@ http.createServer(function(req, res) {
             return res.end(JSON.stringify(body));
         }
 
-        response.writeHead(302, {
+        res.writeHead(302, {
             'Location': ghSummaryUrl + '?access_token=' + body.access_token
         });
 
-        response.end();
+        res.end();
     });
 }).listen(process.env.PORT || 5000);
