@@ -238,7 +238,15 @@
                     resetDate = 'a while';
                 }
 
-				$('#repos #loading > h4').html('GitHub API limit reached... <br /><small class="text-muted">Come back after ' + resetDate + '</small>');
+				$('#repos #loading > h4').html([
+                    'GitHub API limit reached... <br /><small class="text-muted">Come back after ' + resetDate + '</small>',
+                    '<br /><br />',
+                    '<small>...or</small><br /><br />',
+                    '<a href="https://github.com/login/oauth/authorize?client_id=3dfde5917589cb780d3c">',
+                    '<img src="/static/img/sign-in-with-github.png" width="248px" height="52px" alt="Sign in with GitHub" />',
+                    '</a>'
+                ].join(''));
+
 				var $img = $('<img />');
 				$img.attr('height', '230px');
 				$('#repos #loading > h4').parent().css('border', '0').addClass('text-center').prepend($img);
