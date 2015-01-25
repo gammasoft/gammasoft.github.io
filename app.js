@@ -13,7 +13,7 @@ http.createServer(function(req, res) {
         method: 'POST',
         json: {
             client_id: process.env.CLIENT_ID,
-            cliente_secret: process.env.CLIENT_SECRET,
+            client_secret: process.env.CLIENT_SECRET,
             code: query.code
         }
     }, function(err, response, body) {
