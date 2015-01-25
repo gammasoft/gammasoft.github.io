@@ -4,6 +4,7 @@
   "description": "Proxy to obtain access tokens from users",
   "main": "server.js",
   "scripts": {
+    "start": "node app.js",
     "test": "exit 0;"
   },
   "repository": {
@@ -14,6 +15,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gammasoft/gammasoft.github.io/issues"
+  },
+  "engines": {
+    "node": "0.10.x"
   },
   "homepage": "https://github.com/gammasoft/gammasoft.github.io"
 }
