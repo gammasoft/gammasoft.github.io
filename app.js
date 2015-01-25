@@ -1,6 +1,8 @@
 var http = require('http'),
     url = require('url'),
-    request = require('request');
+    request = require('request'),
+
+    ghSummaryUrl = process.env.GHSUMMARY_URL;
 
 http.createServer(function(req, res) {
     var url_parts = url.parse(req.url, true),
@@ -19,9 +21,13 @@ http.createServer(function(req, res) {
     }, function(err, response, body) {
         if(err || body.error) {
             res.statusCode = 500;
+            return res.end(JSON.stringify(body));
         }
 
-        res.statusCode = 200;
-        res.end(JSON.stringify(body));
+        response.writeHead(302, {
+            'Location': ghSummaryUrl + '?access_token=' + body.access_token
+        });
+
+        response.end();
     });
 }).listen(process.env.PORT || 5000);
