@@ -324,8 +324,10 @@
             var data = github.data,
                 ownerCommits = data.owner,
                 allCommits = data.all,
+                commitsCount = 0,
                 index = 0,
                 contributorsCommits = allCommits.map(function(numberOfCommits) {
+                    commitsCount += numberOfCommits;
                     return numberOfCommits - ownerCommits[index++];
                 });
 
@@ -335,6 +337,9 @@
                 },
                 title: {
                     text: 'Weekly commits over the last year'
+                },
+                subtitle: {
+                    text: 'Total of ' + commitsCount + ' commits'
                 },
                 yAxis: {
                     min: 0,
