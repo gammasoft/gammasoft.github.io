@@ -104,7 +104,9 @@
                 &nbsp;|&nbsp;
                 <a class="statistics" data-url="/repos/<%= full_name %>/stats/participation" href="#">Statistics</a>
 			</small>
-            <div class="statisticsChart displayNone"></div>
+            <div class="statisticsChart displayNone">
+                <h4>Please wait...</h4>
+            </div>
 		</div>
 	</script>
 
@@ -295,6 +297,8 @@
 	}
 
     function loadStatistics(url, $div) {
+        $div.show();
+
         var get = $.ajax({
             type: 'GET',
             url: API_URL + url,
@@ -304,16 +308,12 @@
         });
 
         get.done(function(github) {
-            $div.show();
-
             if([200, 202].indexOf(github.meta.status) === -1) {
                 $div.html('<h4>An error occurred while loading statistics data...</h4>');
                 return;
             }
 
             if(github.meta.status === 202) {
-                $div.html('<h4>Please wait...</h4>');
-
                 setTimeout(function() {
                     loadStatistics(url, $div);
                 }, 2000);
@@ -366,7 +366,7 @@
                     }
                 },
                 series: [{
-                    name: user.name,
+                    name: user.name || ('@' + user.login),
                     data: ownerCommits
                 }, {
                     name: 'Contributors',
