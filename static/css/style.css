@@ -1,3 +1,7 @@
+.statisticsChart {
+    margin-top: 15px;
+}
+
 .unstarred, .displayNone {
   display: none;
 }

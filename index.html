@@ -61,7 +61,8 @@
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/js/marked.min.js"></script>
 	<script type="text/javascript" src="/static/js/base64.js"></script>
-	<script type="text/javascript" src="/static/js/color-thief.js"></script>
+    <script type="text/javascript" src="/static/js/color-thief.js"></script>
+	<script type="text/javascript" src="/static/js/highcharts.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 
 	<script id="repo" type="text/template">
@@ -100,13 +101,17 @@
 					&nbsp;|&nbsp;
 					<a target="_blank" href="<%= homepage %>">View Web Site</a>
 				<% } %>
+                &nbsp;|&nbsp;
+                <a class="statistics" data-url="/repos/<%= full_name %>/stats/participation" href="#">Statistics</a>
 			</small>
+            <div class="statisticsChart displayNone"></div>
 		</div>
 	</script>
 
 	<script type="application/javascript">
 
-	var user = window.location.search.match(/user=([^&]+)/g),
+	var API_URL = 'http://api.github.com',
+        user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
 	    allReposLoaded = false,
@@ -119,10 +124,17 @@
 	    dominantColor = null,
         nextMembers = null;
 
-	user = (user && user[0].split('=')[1]) || 'gammasoft';
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    user = (user && user[0].split('=')[1]) || 'gammasoft';
     user = user.replace('/', '');
 
-	access_token = (access_token && access_token[0].split('=')[1]) || null;
+    access_token = (access_token && access_token[0].split('=')[1]) || null;
+    if(access_token && endsWith(access_token, '/')) {
+        access_token = access_token.substring(0, access_token.length - 1);
+    }
 
     function lighten(l, r, g, b) {
         var tmpR = r,
@@ -281,6 +293,83 @@
 			renderRepos();
 		}
 	}
+
+    function loadStatistics(url, $div) {
+        var get = $.ajax({
+            type: 'GET',
+            url: API_URL + url,
+            crossDomain: true,
+            jsonpCallback: 'renderStatistics',
+            dataType: 'jsonp'
+        });
+
+        get.done(function(github) {
+            $div.show();
+
+            if([200, 202].indexOf(github.meta.status) === -1) {
+                $div.html('<h4>An error occurred while loading statistics data...</h4>');
+                return;
+            }
+
+            if(github.meta.status === 202) {
+                $div.html('<h4>Please wait...</h4>');
+
+                setTimeout(function() {
+                    loadStatistics(url, $div);
+                }, 2000);
+
+                return;
+            }
+
+            var data = github.data,
+                ownerCommits = data.owner,
+                allCommits = data.all,
+                index = 0,
+                contributorsCommits = allCommits.map(function(numberOfCommits) {
+                    return numberOfCommits - ownerCommits[index++];
+                });
+
+            $div.highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Weekly commits over the last year'
+                },
+                yAxis: {
+                    min: 0,
+                    tickInterval: 1,
+                    title: {
+                        text: null
+                    }
+                },
+                xAxis: {
+                    labels: {
+                        enabled: false
+                    }
+                },
+                // tooltip: {
+                //     formatter: function () {
+                //         return '<b>' + this.x + '</b><br/>' +
+                //             this.series.name + ': ' + this.y + '<br/>' +
+                //             'Total: ' + this.point.stackTotal;
+                //     }
+                // },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    }
+                },
+                series: [{
+                    name: user.name,
+                    data: ownerCommits
+                }, {
+                    name: 'Contributors',
+                    data: contributorsCommits
+                }]
+            });
+        });
+    }
 
 	function loadRepos(next) {
 		var API_URL = 'http://api.github.com',
@@ -496,14 +585,32 @@
 
 		$('#repos').on('click', '.viewReadme', function(e) {
 			e.preventDefault();
+
 			var $target = $(e.target),
-			$modal = $('#readmeModal');
+			    $modal = $('#readmeModal');
+
 			$modal.find('#loadingReadme').show();
 			$modal.find('#readmeContent').hide();
 			$modal.modal('show');
 
 			loadReadme($target.data('url'));
 		});
+
+        $('#repos').on('click', '.statistics', function(e) {
+            e.preventDefault();
+
+            var $target = $(e.target),
+                $repo = $target.parents('.repo'),
+                $chart = $repo.find('.statisticsChart');
+
+            if($target.html() === 'Statistics') {
+                $target.html('Hide Statistics');
+                loadStatistics($target.data('url'), $chart);
+            } else {
+                $target.html('Statistics');
+                $chart.hide();
+            }
+        });
 
         $('#showMoreMembers').bind('click', function(e) {
             e.preventDefault();
