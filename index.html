@@ -563,6 +563,7 @@
 
 		$modal.find('#loadingReadme').hide();
 		$modal.find('#readmeContent').html(content);
+		$modal.find('#readmeContent').find('img').css('max-width', '100%');
 		$modal.find('#readmeContent').show();
 	}
 
