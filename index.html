@@ -165,33 +165,54 @@
 
         awesomeness = stars + (1.5 * (user.followers || 0)) + (2 * forks) - (0.1 * issues);
         awesomeness = awesomeness.toFixed(0);
+        awesomeness = parseInt(awesomeness, 10);
 
         $('small#awesomeness').remove();
         var $awesomeness = $('<small id="awesomeness" />');
         $awesomeness.html(awesomeness);
+        $('.media-heading').append($awesomeness);
+
+        if(!window.localStorage) {
+            return;
+        }
 
         var history = localStorage.getItem('awesomenessHistory'),
             userHistory;
-            
+
         if(!history) {
-            history = {};    
+            history = {};
         } else {
             history = JSON.parse(history);
         }
-        
-        userHistory = history[user];
-        
+
+        userHistory = history[user.login];
+
         if(!userHistory) {
             userHistory = [];
         }
-        
+
+        var lastRecord = userHistory[userHistory.length - 1],
+            now = new Date();
+
+        if(lastRecord && lastRecord.awesomeness === awesomeness) {
+            var oneDay = 1000 * 60 * 60 * 24,
+                oneMinute = 1000 * 60,
+                timeout = oneMinute;
+
+            lastRecord.timestamp = new Date(lastRecord.timestamp)
+
+            if(now.getTime() - lastRecord.timestamp < timeout) {
+                return;
+            }
+        }
+
         userHistory.push({
-            date: new Date(),
+            timestamp: new Date(),
             awesomeness: awesomeness
         });
-        
-        localStorage.setItem('awesomenessHistory', JSON.stringify(userHistory, null, history));
-        $('.media-heading').append($awesomeness);
+
+        history[user.login] = userHistory;
+        localStorage.setItem('awesomenessHistory', JSON.stringify(history, null, history));
     }
 
     function isTooLight(rgb) {
