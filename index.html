@@ -170,6 +170,27 @@
         var $awesomeness = $('<small id="awesomeness" />');
         $awesomeness.html(awesomeness);
 
+        var history = localStorage.getItem('awesomenessHistory'),
+            userHistory;
+            
+        if(!history) {
+            history = {};    
+        } else {
+            history = JSON.parse(history);
+        }
+        
+        userHistory = history[user];
+        
+        if(!userHistory) {
+            userHistory = [];
+        }
+        
+        userHistory.push({
+            date: new Date(),
+            awesomeness: awesomeness
+        });
+        
+        localStorage.setItem('awesomenessHistory', JSON.stringify(userHistory, null, history));
         $('.media-heading').append($awesomeness);
     }
 
