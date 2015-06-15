@@ -30,6 +30,12 @@
   margin-top: 20px;
 }
 
+small#awesomeness:hover {
+    border-bottom: 1px dotted black;
+    cursor: pointer;
+    cursor: hand;
+}
+
 #userData > div {
   padding-top: 20px;
   padding-bottom: 20px;

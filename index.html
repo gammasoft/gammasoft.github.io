@@ -41,14 +41,24 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="readmeModal" tabindex="-1" role="dialog" aria-labelledby="readmeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="readmeModal" tabindex="-1" role="dialog" aria-labelledby="readmeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="loadingReadme">Loading README.md contents...</p>
+                    <div id="readmeContent"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="awesomeHistoryModal" tabindex="-1" role="dialog" aria-labelledby="awesomeHistoryModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
-	            <div class="modal-body">
-	                <p id="loadingReadme">Loading README.md contents...</p>
-	                <div id="readmeContent"></div>
-	            </div>
-
+	            <div class="modal-body"></div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
 	            </div>
@@ -170,6 +180,68 @@
         $('small#awesomeness').remove();
         var $awesomeness = $('<small id="awesomeness" />');
         $awesomeness.html(awesomeness);
+
+        $awesomeness.on('click', function() {
+            if(!localStorage) {
+                return;
+            }
+
+            var awesomenessHistory = JSON.parse(localStorage.awesomenessHistory || {}),
+                userAwesomeness = awesomenessHistory[user.login];
+
+            if(!userAwesomeness) {
+                return;
+            }
+
+            var $awesomeHistoryModal = $('#awesomeHistoryModal'),
+                $chart = $awesomeHistoryModal.find('.modal-body').empty();
+
+            $awesomeHistoryModal.on('shown.bs.modal', function() {
+                $chart.highcharts({
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Awesomeness evolution for ' + (user.name || ('@' + user.login))
+                    },
+                    subtitle: false,
+                    yAxis: {
+                        min: 0,
+                        gridLineWidth: 0,
+                        tickInterval: 1,
+                        title: {
+                            text: null
+                        }
+                    },
+                    xAxis: {
+                        labels: {
+                            enabled: false
+                        }
+                    },
+                    // tooltip: {
+                    //     formatter: function () {
+                    //         return '<b>' + this.x + '</b><br/>' +
+                    //             this.series.name + ': ' + this.y + '<br/>' +
+                    //             'Total: ' + this.point.stackTotal;
+                    //     }
+                    // },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal'
+                        }
+                    },
+                    series: [{
+                        name: user.name || ('@' + user.login),
+                        data: userAwesomeness.map(function(record) {
+                            return record.awesomeness;
+                        })
+                    }]
+                });
+            });
+
+            $awesomeHistoryModal.modal('show');
+        });
+
         $('.media-heading').append($awesomeness);
 
         if(!window.localStorage) {
@@ -384,6 +456,7 @@
                 },
                 yAxis: {
                     min: 0,
+                    gridLineWidth: 0,
                     tickInterval: 1,
                     title: {
                         text: null
