@@ -196,8 +196,7 @@
 
         if(lastRecord && lastRecord.awesomeness === awesomeness) {
             var oneDay = 1000 * 60 * 60 * 24,
-                oneMinute = 1000 * 60,
-                timeout = oneMinute;
+                timeout = oneDay;
 
             lastRecord.timestamp = new Date(lastRecord.timestamp)
 
