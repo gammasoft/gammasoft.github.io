@@ -72,7 +72,7 @@
 	<script type="text/javascript" src="/static/js/marked.min.js"></script>
 	<script type="text/javascript" src="/static/js/base64.js"></script>
     <script type="text/javascript" src="/static/js/color-thief.js"></script>
-	<script type="text/javascript" src="/static/js/highcharts.min.js"></script>
+	<script type="text/javascript" src="/static/js/highcharts.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 
 	<script id="repo" type="text/template">
@@ -206,30 +206,55 @@
                     },
                     subtitle: false,
                     yAxis: {
-                        min: 0,
-                        gridLineWidth: 0
-                    },
-                    xAxis: {
-                        labels: {
-                            enabled: false
+                        gridLineWidth: 0,
+                        allowDecimals: false,
+                        title: {
+                            text: 'Awesomeness'
                         }
                     },
-                    // tooltip: {
-                    //     formatter: function () {
-                    //         return '<b>' + this.x + '</b><br/>' +
-                    //             this.series.name + ': ' + this.y + '<br/>' +
-                    //             'Total: ' + this.point.stackTotal;
-                    //     }
-                    // },
-                    plotOptions: {
-                        column: {
-                            stacking: 'normal'
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            formatter: function() {
+                                var date = new Date(this.value);
+
+                                return [
+                                    date.getDate(),
+                                    date.getMonth() + 1,
+                                    date.getFullYear()
+                                ].join('/');
+                            }
+                        },
+                        minTickInterval: 1000 * 60 * 60 * 24,
+                        // crosshair: true,
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            var date = new Date(this.x);
+
+                            return [
+                                '<b>',
+                                this.y + ' points in ',
+                                [
+                                    date.getDate(),
+                                    date.getMonth() + 1,
+                                    date.getFullYear()
+                                ].join('/'),
+                                '</b>'
+                            ].join('');
                         }
                     },
                     series: [{
                         name: user.name || ('@' + user.login),
                         data: userAwesomeness.map(function(record) {
-                            return record.awesomeness;
+                            record.timestamp = new Date(record.timestamp);
+                            record.timestamp = Date.UTC(record.timestamp.getFullYear(),
+                                                        record.timestamp.getMonth(),
+                                                        record.timestamp.getDate(),
+                                                        record.timestamp.getHours(),
+                                                        record.timestamp.getMinutes());
+
+                            return [record.timestamp, record.awesomeness];
                         })
                     }]
                 });
@@ -463,13 +488,11 @@
                         enabled: false
                     }
                 },
-                // tooltip: {
-                //     formatter: function () {
-                //         return '<b>' + this.x + '</b><br/>' +
-                //             this.series.name + ': ' + this.y + '<br/>' +
-                //             'Total: ' + this.point.stackTotal;
-                //     }
-                // },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.y + '</b>';
+                    }
+                },
                 plotOptions: {
                     column: {
                         stacking: 'normal'
