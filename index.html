@@ -126,6 +126,7 @@
         user = window.location.search.match(/user=([^&]+)/g),
 	    access_token = window.location.search.match(/access_token=([^&]+)/g),
 	    repos = [],
+        languages = {},
 	    allReposLoaded = false,
 	    user,
 	    stars = 0,
@@ -337,6 +338,7 @@
 
 		$('#loading').hide();
 
+        var nullLanguage = 'Not known';
 		repos.filter(function(repo) {
 			if(repo.stargazers_count === 0) {
 				unstarredRepos++;
@@ -348,6 +350,13 @@
 			stars += repo.stargazers_count;
 			forks += repo.forks;
 			issues += repo.open_issues;
+
+            var languages = repo.language || nullLanguage;
+            if(!languages[language]) {
+                languages[language] = 1;
+            } else {
+                languages[language]++;
+            }
 
 			$('#repos').append(repoTemplate(repo));
 		});
